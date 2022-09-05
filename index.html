@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automata Sound</title>
+</head>
+<body>
+    <button id="clear">Clear Canvas</button>
+    <canvas id="beauty">
+
+    </canvas>
+    <p>Proudly Hacked by Josias Aurel pls send help</p>
+    <style>
+        body {
+            margin: 0 auto;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            font-family: monospace;
+        }
+
+        button {
+            padding: 0.5em 1em;
+            margin: 0.5em;
+            background-color: black;
+            border: solid transparent;
+            color: white;
+            transition: transform 0.2s ease-in-out
+        }
+
+        button:active {
+            transform: scale(0.9);
+        }
+
+        #beauty {
+            image-rendering: pixelated;
+            width: 90%;
+            height: 90%;
+            background-color: antiquewhite;
+        }
+    </style>
+    <script src="index.js"></script>
+</body>
+</html>
