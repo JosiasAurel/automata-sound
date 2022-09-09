@@ -120,10 +120,10 @@ navigator.mediaDevices
       for (let i = 0; i < cellsArray.length; i++) {
         for (let j = 0; j < cellsArray[i].length; j++) {
           if (cellsArray[i][j] === 1) {
-            /* const red = Math.floor(Math.random()*255);
+            const red = Math.floor(Math.random()*255);
             const blue = Math.floor(Math.random()*255);
             const green = Math.floor(Math.random()*255);
-            ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`; */
+            ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
             ctx.fillRect(ix, iy, 2, 2);
           } else {
             ctx.clearRect(ix, iy, 2, 2);
