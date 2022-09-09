@@ -13,10 +13,11 @@ I want to make a grid that will match the screen size
 I want every square on the screen to by a 3x3 square
 */
 
-const horizontalSquareCount = canvas.clientWidth / 2;
-const verticalSquareCount = canvas.clientHeight / 2;
+const horizontalSquareCount = Math.floor(canvas.clientWidth / 2);
+const verticalSquareCount = Math.floor(canvas.clientHeight / 2);
 
-let cellsArray = [];
+// console.log(verticalSquareCount, horizontalSquareCount);
+let cellsArray = new Array(verticalSquareCount).fill(0).map(v => new Array(horizontalSquareCount).fill(0));
 
 const gridDim = 2; // 3x3 square
 const offset = 2;
@@ -32,12 +33,7 @@ function fillGrid() {
 }
 
 function prefillGrid() {
-  for (let x = 0; x < horizontalSquareCount; x++) {
-    cellsArray.push([]);
-    for (let y = 0; y < verticalSquareCount; y++) {
-      cellsArray[x].push(0);
-    }
-  }
+  cellsArray = new Array(verticalSquareCount).fill(0).map(v => new Array(horizontalSquareCount).fill(0));
 }
 
 const clearGrid = () =>
@@ -51,8 +47,8 @@ const clearGrid = () =>
 function cellFate() {
   let nextGen = Array.from(cellsArray);
 
-  for (let j = 0; j < nextGen.length; j++) {
-    for (let i = 0; i < cellsArray[i].length; i++) {
+  for (let i = 0; i < cellsArray.length; i++) {
+    for (let j = 0; j < cellsArray[i].length; j++) {
       let liveNeighbours = 0;
       const neighbours = [
         [i - 1, j - 1],
@@ -66,34 +62,26 @@ function cellFate() {
       ];
       // console.log(neighbours[0]);
 
-      neighbours.forEach(neighbour => {
-        let [x, y] = neighbour;
-        if (x >= 0 && y >= 0) {
-          if (nextGen[x][y] === 1) liveNeighbours++;
+      neighbours.forEach((neighbour) => {
+        let [i_, j_] = neighbour;
+        if (i_ >= 0 && i_ < cellsArray.length && j_ >= 0 && j_ < cellsArray[0].length) {
+          // console.log(neighbour);
+          // console.log(cellsArray[i_]);
+          if (cellsArray[i_][j_] === 1) liveNeighbours++;
+          // console.log(liveNeighbours);
         }
       });
-      /* for (let u = 0; u < neighbours.length; u++) {
-        let x = neighbours[u][0];
-        let y = neighbours[u][1];
-        // console.log(x, y);
-        if (x >= 0 && y >= 0) {
-          if (nextGen[x][y] === 1) liveNeighbours++;
-        }
-      } */
 
-      if (nextGen[i][j] === 1) {
-        // overpopulation or underpopulation
-        if (liveNeighbours > 3 || liveNeighbours < 2) nextGen[i][j] = 0;
+      // overpopulation or underpopulation
+      if (cellsArray[i][j] === 1) {
+        if ((liveNeighbours > 3) || (liveNeighbours < 2)) nextGen[i][j] = 0;
       } else {
         if (liveNeighbours === 3) nextGen[i][j] = 1;
       }
     }
   }
-  // liveNeighbours = 0;
-  // console.log(liveNeighbours);
   return nextGen;
 }
-
 // fillGrid();
 // gameOfLife();
 
@@ -131,11 +119,11 @@ navigator.mediaDevices
       let iy = 2;
       for (let i = 0; i < cellsArray.length; i++) {
         for (let j = 0; j < cellsArray[i].length; j++) {
-          if (cellsArray[j][i] === 1) {
-            const red = Math.floor(Math.random()*255);
+          if (cellsArray[i][j] === 1) {
+            /* const red = Math.floor(Math.random()*255);
             const blue = Math.floor(Math.random()*255);
             const green = Math.floor(Math.random()*255);
-            ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+            ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`; */
             ctx.fillRect(ix, iy, 2, 2);
           } else {
             ctx.clearRect(ix, iy, 2, 2);
@@ -149,9 +137,9 @@ navigator.mediaDevices
 
       document.getElementById("clear").addEventListener("click", clearGrid);
     }
-    prefillGrid();
+    // prefillGrid();
+    // console.log(cellsArray);
     drawCells();
   })
   .catch((e) => console.error(e));
-
 // send help pls
